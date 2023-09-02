@@ -4,16 +4,12 @@
 
 > 
 
-####  Para ...:
+####  Para esse projeto usamos as libs abaixo listadas:
 
-  - Instalando a lib ...:
-    `npm i passport`
+  - Instalando a lib socket.io:
+    `npm i socket.io`
 
-      - Instalando suporte ao typescript para a lib:
-        `npm i -D @types/passport`
 
-  - Instalando a lib passport-http
-    `npm i passport-http`
 
 
 ####Instruções:
