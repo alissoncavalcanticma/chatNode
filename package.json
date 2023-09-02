@@ -1,0 +1,11 @@
+{
+  "name": "chatnode",
+  "version": "1.0.0",
+  "description": "<div align=\"center\" id=\"top\"> \r   <img src=\"./.github/app.gif\" alt=\"chatNode\" />",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
