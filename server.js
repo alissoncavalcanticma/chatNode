@@ -28,5 +28,23 @@ io.on('connection', (socket) => {
         console.log(connectedUsers);
 
         socket.emit('user-ok', connectedUsers);
+
+        socket.broadcast.emit('list-update', {
+            joined: userName,
+            list: connectedUsers
+        })
+    });
+
+    //Disconect users
+
+    socket.on('disconnect', () => {
+
+        connectedUsers = connectedUsers.filter(u => u != socket.userName);
+        console.log(connectedUsers);
+
+        socket.broadcast.emit('list-update', {
+            left: socket.userName,
+            list: connectedUsers
+        });
     });
 });
