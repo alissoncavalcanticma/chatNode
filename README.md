@@ -56,7 +56,7 @@ $ cd chatNode
 $ npm i
 
 # Run the project
-$ npm run start-dev
+$ node server.js
 
 # The server will initialize in the <http://localhost:4000>
 ```
