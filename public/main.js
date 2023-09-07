@@ -34,9 +34,15 @@ function addMessage(type, user, msg) {
             ul.innerHTML += '<li class="m-status">' + msg + '</li>';
             break;
         case 'msg':
-            ul.innerHTML += '<li class="m-txt"><spam>' + user + '</spam> ' + msg + '<li>';
+            if (userName == user) {
+                ul.innerHTML += '<li class="m-txt"><span class="me">' + user + '</span> ' + msg + '<li>';
+            } else {
+                ul.innerHTML += '<li class="m-txt"><span>' + user + '</span> ' + msg + '<li>';
+            }
             break;
     }
+
+    ul.scrollTop = ul.scrollHeight;
 }
 
 //socket para login no chat
@@ -48,6 +54,20 @@ loginInput.addEventListener('keyup', (e) => {
             document.title = 'Chat (' + userName + ')';
 
             socket.emit('join-request', userName);
+        }
+    }
+});
+
+//listener para enviar o digitado no chat para a lista e limpar o ampo para novo texto
+
+textInput.addEventListener('keyup', (e) => {
+    if (e.keyCode === 13) {
+        let txt = textInput.value.trim();
+        textInput.value = '';
+
+        if (txt != '') {
+            addMessage('msg', userName, txt)
+            socket.emit('send-msg', txt);
         }
     }
 });
@@ -80,4 +100,35 @@ socket.on('list-update', (data) => {
 
     userList = data.list;
     renderList();
+});
+
+// escuta para receber msg no chat
+
+socket.on('show-msg', (data) => {
+    addMessage('msg', data.userName, data.message);
+});
+
+// socket para informe de desconexão
+
+socket.on('disconnect', () => {
+    addMessage('status', null, 'Você foi desconectado!');
+    userList = [];
+    renderList();
+});
+
+
+// socket para informe de tentativa de reconexão
+
+socket.on('connect_error', () => {
+    addMessage('status', null, 'Tentando reconectar....');
+});
+
+// socket para informe de tentativa de reconexão
+
+socket.on('connect', () => {
+    addMessage('status', null, 'Conectado!');
+
+    if (userName != '') {
+        socket.emit('join-request', userName);
+    }
 });

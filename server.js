@@ -47,4 +47,16 @@ io.on('connection', (socket) => {
             list: connectedUsers
         });
     });
+
+    //send msg to all
+
+    socket.on('send-msg', (txt) => {
+        let obj = {
+            userName: socket.userName,
+            message: txt
+        };
+
+        //socket.emit('show-msg', obj);
+        socket.broadcast.emit('show-msg', obj);
+    });
 });
